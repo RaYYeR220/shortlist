@@ -9,13 +9,13 @@ proxy:
   url: https://proxy.armoriq.ai
 mcp_servers:
   - id: ats
-    url: $SHORTLIST_ATS_URL
+    url: https://shortlist-api-494617981995.us-central1.run.app/ats/mcp
     description: Applicant tracking (Shortlist)
     auth:
       type: bearer
       token: $MCP_SHARED_SECRET
   - id: comms
-    url: $SHORTLIST_COMMS_URL
+    url: https://shortlist-api-494617981995.us-central1.run.app/comms/mcp
     description: Candidate communications (Shortlist)
     auth:
       type: bearer
