@@ -10,6 +10,9 @@ import time
 
 import httpx
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://localhost:8000"
 c = httpx.Client(base_url=BASE, timeout=90)
 TERMINAL = ("run.finished", "run.failed", "run.refused")
