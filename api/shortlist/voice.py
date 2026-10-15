@@ -48,8 +48,8 @@ def tool_definitions(base_url: str, secret: str) -> list[dict]:
     defs = []
     for name, params in _PARAMS.items():
         properties = {
-            "run_id": {"type": "string", "description": "Session id", "dynamic_variable": "run_id"},
-            "workspace_id": {"type": "string", "description": "Workspace id", "dynamic_variable": "workspace_id"},
+            "run_id": {"type": "string", "dynamic_variable": "run_id"},
+            "workspace_id": {"type": "string", "dynamic_variable": "workspace_id"},
         }
         properties.update({p: {"type": t, "description": p.replace("_", " ")} for p, t in params.items()})
         defs.append({

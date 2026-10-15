@@ -13,6 +13,14 @@ def test_tool_definitions_cover_every_voice_tool():
     assert all(d["api_schema"]["request_headers"]["X-Voice-Secret"] == "s3cret" for d in defs)
 
 
+def test_dynamic_variable_properties_carry_only_the_binding():
+    # ElevenLabs rejects a property that sets both dynamic_variable and description.
+    for d in tool_definitions("https://api.test", "s3cret"):
+        props = d["api_schema"]["request_body_schema"]["properties"]
+        for key in ("run_id", "workspace_id"):
+            assert props[key] == {"type": "string", "dynamic_variable": key}
+
+
 def test_webhook_requires_the_secret_and_enforces_the_plan(settings):
     settings.voice_webhook_secret = "s3cret"
     llm = CallerLLM()
