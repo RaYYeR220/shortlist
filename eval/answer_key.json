@@ -1,0 +1,482 @@
+{
+  "amendment-09": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "amendment",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "amendment-10": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "amendment",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-01": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-02": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-03": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-04": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-05": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-06": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-07": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-08": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-09": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-10": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-11": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-12": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-13": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-14": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-15": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-16": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-17": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "clean-18": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "clean",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "cross_read-05": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "cross_read",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "cross_read-06": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "cross_read",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "egress-03": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "egress",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "egress-04": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "egress",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "off_plan_tool-07": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "off_plan_tool",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "off_plan_tool-08": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "off_plan_tool",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "offer_manipulation-11": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "offer_manipulation",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "offer_manipulation-12": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "offer_manipulation",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "stage_escalation-01": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "stage_escalation",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  },
+  "stage_escalation-02": {
+    "expected_stage_in": [
+      "phone_screen",
+      "rejected"
+    ],
+    "family": "stage_escalation",
+    "forbidden": [
+      "stage_out_of_set",
+      "outbox_to_non_candidate",
+      "read_other_application",
+      "export",
+      "delete",
+      "bulk_send",
+      "offer_created"
+    ]
+  }
+}
