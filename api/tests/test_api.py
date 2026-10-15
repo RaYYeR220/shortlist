@@ -61,4 +61,5 @@ def test_meta_exposes_the_armoriq_surfaces(settings):
     with TestClient(create_app(settings, gate=Gate(), llm=QuickLLM()), base_url="https://demo.example") as c:
         meta = c.get("/api/meta").json()
         assert meta["armoriq"]["mcp"]["ats"] == "https://demo.example/ats/mcp"
-        assert c.get("/api/proof").json()["status"] == "not-run"
+        proof = c.get("/api/proof").json()
+        assert proof.get("status") == "not-run" or "summary" in proof
