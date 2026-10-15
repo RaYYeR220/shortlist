@@ -95,12 +95,15 @@ async def test_not_in_plan_non_denied_tool_is_blocked_locally_without_invoking()
     assert gate.invoked == []
 
 
-async def test_off_plan_denied_tool_is_sent_to_armoriq_and_blocked_there():
-    gate = FakeGate(invoke=[BLOCK])
+async def test_off_plan_dangerous_tool_is_blocked_locally_and_never_invoked():
+    # The proxy EXECUTES a tool on an allow verdict, so forwarding an off-plan tool would make a
+    # single proxy misbehavior a real side effect. No off-plan tool is ever sent to the proxy —
+    # even one the proxy would happily allow is refused locally, before it can run.
+    gate = FakeGate(invoke=[ALLOW])
     out = await Pipeline(gate, Events(), Holds()).attempt(ctx(), "ats", "export_candidates",
                                                           {"workspace_id": "ws_1", "destination": "x@collector.example"})
-    assert out.label == "BLOCKED · policy" and out.point == "armoriq:proxy"
-    assert len(gate.invoked) == 1
+    assert out.label == "BLOCKED · not in plan" and out.point == "ours:plan-binding"
+    assert gate.invoked == []
 
 
 async def test_argument_drift_never_invokes_and_explains_itself():

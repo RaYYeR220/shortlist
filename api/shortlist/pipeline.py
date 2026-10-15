@@ -26,9 +26,6 @@ from .taint import Taint
 DRIFT_POINT = "ours:plan-binding"
 NOT_IN_PLAN_POINT = "ours:plan-binding"
 AMOUNT_FIELDS = ("salary", "amount")
-# Tools the ArmorIQ policy denies. Attempted off-plan, they are sent to the proxy so
-# ArmorIQ's own block is demonstrated (safe: the policy refuses them).
-POLICY_DENIED = {"export_candidates", "delete_application", "send_bulk", "forward_file"}
 
 
 @dataclass
@@ -92,9 +89,8 @@ def _drift_reason(drift: list[dict], plan_id: str) -> str:
 
 
 class Pipeline:
-    def __init__(self, gate: ArmorGate, events: EventSink, holds: HoldWaiter | None, policy_denied: set | None = None):
+    def __init__(self, gate: ArmorGate, events: EventSink, holds: HoldWaiter | None):
         self.gate, self.events, self.holds = gate, events, holds
-        self.policy_denied = POLICY_DENIED if policy_denied is None else policy_denied
 
     def _emit_verdict(self, ctx: RunContext, mcp: str, action: str, verdict) -> None:
         self.events.emit(ctx.run_id, "verdict", {"mcp": mcp, "action": action, **verdict.to_json()})
@@ -107,8 +103,9 @@ class Pipeline:
         self.events.emit(ctx.run_id, "attempt", {"mcp": mcp, "action": action, "args": args})
         match = match_call(ctx.plan, mcp, action, args, ctx.resolve)
         if match.status == "not_in_plan":
-            if action in self.policy_denied:
-                return await self._invoke(ctx, mcp, action, args, off_plan=True)
+            # No off-plan tool is forwarded to the proxy. The proxy executes a tool on an allow
+            # verdict, so forwarding one would turn a single proxy misbehaviour into a real side
+            # effect; refusing here means an off-plan call can never run, whatever the proxy says.
             reason = f"{mcp}.{action} is not a step of signed plan {ctx.signed.plan_id}"
             return self._decide(ctx, mcp, action, args, Outcome("blocked", "BLOCKED · not in plan", NOT_IN_PLAN_POINT, reason))
         if match.status == "drift":
@@ -118,7 +115,7 @@ class Pipeline:
         return await self._invoke(ctx, mcp, action, args)
 
     async def _invoke(self, ctx: RunContext, mcp: str, action: str, args: dict, *,
-                      off_plan: bool = False, delegation_id: str | None = None) -> Outcome:
+                      delegation_id: str | None = None) -> Outcome:
         out = await asyncio.to_thread(self.gate.invoke, ctx.signed, mcp, action, args, resume_delegation_id=delegation_id)
         if out.verdict.action == "error" and out.verdict.reason == "token-expired" and ctx.resign is not None:
             ctx.signed = await ctx.resign()
