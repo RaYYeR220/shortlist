@@ -92,6 +92,9 @@ Tests: `cd api && uv run pytest` · `cd web && npm test`.
   feature (see FINDINGS).
 - The outbox and calendar are the product's own sandbox; no real email is sent.
 - Each visitor gets their own seeded workspace; data is demo data, not production records.
+- The hold's human-approval endpoint is open in this public demo, so a visitor can approve
+  their own held action — in production it sits behind the approver's auth. It is never
+  reachable from a résumé or a caller: the agent holds only MCP tools, not this control.
 - The voice screener is optional; the text screen gives the same interaction without it.
 
 ## Evaluation
