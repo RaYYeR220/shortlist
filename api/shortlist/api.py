@@ -9,7 +9,7 @@ from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field, field_validator
 from sse_starlette.sse import EventSourceResponse
 
-from . import db, domain, seed
+from . import db, domain, seed, voice
 from .runs import TERMINAL, RateLimited
 
 router = APIRouter(prefix="/api")
@@ -186,6 +186,45 @@ async def screen_say(run_id: str, body: Say, request: Request) -> dict:
         return {"reply": await _services(request).runs.screen_say(run_id, body.text)}
     except KeyError:
         raise HTTPException(status_code=404, detail="screen not found or expired")
+
+
+class VoiceSession(BaseModel):
+    workspace_id: str
+    application_id: str
+
+
+@router.post("/voice/session")
+async def voice_session(body: VoiceSession, request: Request) -> dict:
+    settings = request.app.state.settings
+    if not settings.elevenlabs_api_key or not settings.elevenlabs_agent_id:
+        raise HTTPException(status_code=503, detail="voice is not configured; use the text screen")
+    _require_workspace(body.workspace_id)
+    _budget(request, "runs", settings.global_runs_per_hour)
+    runs = _services(request).runs
+    try:
+        run_id = await runs.open_screen(body.workspace_id, body.application_id, "gullible")
+        url = await voice.signed_url(settings.elevenlabs_api_key, settings.elevenlabs_agent_id)
+    except RateLimited as exc:
+        raise HTTPException(status_code=429, detail=str(exc))
+    except domain.DomainError as exc:
+        raise HTTPException(status_code=404, detail=str(exc))
+    candidate = next(a for a in domain.board(body.workspace_id)["applications"] if a["id"] == body.application_id)
+    return {"run_id": run_id, "signed_url": url, "dynamic_variables": {
+        "run_id": run_id, "workspace_id": body.workspace_id, "application_id": body.application_id,
+        "candidate_name": candidate["name"], "company": settings.voice_company_name}}
+
+
+@router.post("/voice/tools/{tool}")
+async def voice_tool(tool: str, request: Request) -> dict:
+    settings = request.app.state.settings
+    secret = settings.voice_webhook_secret
+    if not secret or request.headers.get("x-voice-secret") != secret:
+        raise HTTPException(status_code=401, detail="unauthorized")
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    return await voice.handle_tool(_services(request), tool, body if isinstance(body, dict) else {})
 
 
 @router.get("/meta")

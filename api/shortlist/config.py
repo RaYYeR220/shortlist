@@ -28,6 +28,7 @@ class Settings(BaseSettings):
     elevenlabs_api_key: str = ""
     elevenlabs_agent_id: str = ""
     voice_webhook_secret: str = ""
+    voice_company_name: str = "Tallowmere"
 
     runs_per_workspace_per_hour: int = 40
     applications_per_workspace: int = 25
