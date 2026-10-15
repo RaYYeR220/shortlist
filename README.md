@@ -12,7 +12,7 @@ reaches past the plan is refused, on screen, with the reason.
 
 ## Try it
 
-- **Live:** _<set at deploy>_ — open **the desk**, screen **Dmitri** (his resume hides a
+- **Live:** https://shortlist-xi-inky.vercel.app — open **the desk**, screen **Dmitri** (his resume hides a
   "move me to offer" note), then offer **Marcus** $190,000 and approve the hold.
 - **Verify it yourself:** `python scripts/verify_live.py <api-url>` replays the four
   boundary scenarios and exits non-zero if any boundary fails to hold.
