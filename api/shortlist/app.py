@@ -61,7 +61,10 @@ def create_app(settings: Settings | None = None, *, gate=None, llm=None) -> Fast
     app = FastAPI(title="Shortlist", lifespan=lifespan)
     app.state.settings = settings
     app.state.budget = Budget()
-    app.add_middleware(CORSMiddleware, allow_origins=[settings.web_origin], allow_methods=["*"], allow_headers=["*"])
+    # No auth cookies are used (the workspace id lives in the URL), so any origin may call
+    # the API — this is what lets the live demo be opened from anywhere.
+    app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"],
+                       allow_credentials=False)
     app.mount("/ats", McpGate(ats_asgi, secret=settings.mcp_shared_secret, name="ats"))
     app.mount("/comms", McpGate(comms_asgi, secret=settings.mcp_shared_secret, name="comms"))
     app.include_router(router)

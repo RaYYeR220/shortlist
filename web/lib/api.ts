@@ -10,7 +10,7 @@ export interface Approval { id: string; run_id: string; delegation_id: string; m
 export interface SignedSummary { plan_id: string; plan_hash: string; merkle_root: string | null; intent_reference: string; expires_at: number }
 export interface PlanStep { key: string; mcp: string; action: string; purpose: string; constraints: Record<string, Record<string, unknown>> }
 export interface PlanDoc { objective_type: string; goal: string; planner_fallback: boolean; steps: PlanStep[] }
-export interface RunRow { id: string; objective_type: string; status: string; posture: string; objective_args: { application_id: string; job_id: string; salary: number | null }; plan: PlanDoc | null; signed: SignedSummary | null; summary: string | null; created_at: string }
+export interface RunRow { id: string; objective_type: string; status: string; posture: string; objective_args: { application_id: string; job_id: string; salary: number | null }; plan: PlanDoc | null; signed: SignedSummary | null; summary: string | null; error: string | null; created_at: string }
 export interface Board { jobs: Job[]; applications: Application[]; outbox: OutboxMessage[]; offers: Offer[]; notes: Note[]; approvals: Approval[]; runs: RunRow[] }
 export interface RunEvent { seq: number; kind: string; payload: any; at: string }
 export interface RunDetail extends RunRow { events: RunEvent[] }
