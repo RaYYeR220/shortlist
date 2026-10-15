@@ -116,10 +116,16 @@ class ApprovalDesk:
         row = self._row(approval_id)
         if row["status"] != "pending":
             return row
-        if decision == "approved":
-            await asyncio.to_thread(self.gate.approve, row["delegation_id"])
-        else:
-            await asyncio.to_thread(self.gate.reject, row["delegation_id"], f"rejected by {by}")
+        # Record the decision with ArmorIQ's delegation API too, best-effort. The human's
+        # decision here is the gate; a hiring manager can equally approve the held plan in
+        # the ArmorIQ console, which delegation-status polling then resumes.
+        try:
+            if decision == "approved":
+                await asyncio.to_thread(self.gate.approve, row["delegation_id"])
+            else:
+                await asyncio.to_thread(self.gate.reject, row["delegation_id"], f"rejected by {by}")
+        except Exception as exc:
+            log.warning("delegation %s could not be recorded in ArmorIQ (%s); the local decision stands", decision, exc)
         waiting = approval_id in self._futures
         self._resolve(approval_id, decision, by)
         if not waiting:
