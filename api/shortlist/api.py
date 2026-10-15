@@ -64,8 +64,14 @@ class Say(BaseModel):
     text: str = Field(min_length=1, max_length=1500)
 
 
+def _budget(request: Request, name: str, limit: int) -> None:
+    if not request.app.state.budget.allow(name, limit):
+        raise HTTPException(status_code=429, detail="the shared demo budget is spent for now; try again later")
+
+
 @router.post("/workspaces")
-def create_workspace() -> dict:
+def create_workspace(request: Request) -> dict:
+    _budget(request, "workspaces", request.app.state.settings.global_workspaces_per_hour)
     return {"workspace_id": seed.create_workspace()}
 
 
@@ -99,6 +105,7 @@ async def start_run(body: NewRun, request: Request) -> dict:
     _require_workspace(body.workspace_id)
     if body.type == "extend_offer" and not body.salary:
         raise HTTPException(status_code=422, detail="salary is required for an offer")
+    _budget(request, "runs", request.app.state.settings.global_runs_per_hour)
     runs = _services(request).runs
     try:
         run_id = runs.create(body.workspace_id, body.type, body.application_id, body.salary, body.posture)
@@ -164,6 +171,7 @@ async def decide(approval_id: str, body: Decision, request: Request) -> dict:
 @router.post("/screens")
 async def open_screen(body: NewScreen, request: Request) -> dict:
     _require_workspace(body.workspace_id)
+    _budget(request, "runs", request.app.state.settings.global_runs_per_hour)
     try:
         return {"run_id": await _services(request).runs.open_screen(body.workspace_id, body.application_id, body.posture)}
     except RateLimited as exc:

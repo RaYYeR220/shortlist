@@ -31,6 +31,8 @@ class Settings(BaseSettings):
 
     runs_per_workspace_per_hour: int = 40
     applications_per_workspace: int = 25
+    global_runs_per_hour: int = 400
+    global_workspaces_per_hour: int = 600
     admin_token: str = ""
 
 

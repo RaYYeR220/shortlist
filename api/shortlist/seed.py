@@ -1,6 +1,7 @@
 """Seed data for a visitor workspace. All people and companies are fictional;
 all addresses use reserved example domains."""
 
+import secrets
 from datetime import datetime, timedelta
 
 import sqlalchemy as sa
@@ -135,7 +136,9 @@ def _insert_workspace(conn: sa.Connection, ws: str, now: datetime) -> None:
 
 def create_workspace(now: datetime | None = None) -> str:
     now = now or db.utcnow()
-    ws = db.new_id("ws")
+    # A workspace id is the only thing standing between one visitor and another's demo
+    # data (there is no login), so it is a wide unguessable token, not a short id.
+    ws = f"ws_{secrets.token_urlsafe(18)}"
     with db.engine().begin() as conn:
         conn.execute(sa.insert(db.workspace).values(id=ws, created_at=now, seed_version=SEED_VERSION))
         _insert_workspace(conn, ws, now)

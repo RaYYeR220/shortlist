@@ -10,6 +10,7 @@ from mcp.server.transport_security import TransportSecuritySettings
 from . import db
 from .api import router
 from .armor import ArmorGate
+from .budget import Budget
 from .catalog import build_catalog
 from .config import Settings, get_settings
 from .llm import LLM
@@ -59,6 +60,7 @@ def create_app(settings: Settings | None = None, *, gate=None, llm=None) -> Fast
 
     app = FastAPI(title="Shortlist", lifespan=lifespan)
     app.state.settings = settings
+    app.state.budget = Budget()
     app.add_middleware(CORSMiddleware, allow_origins=[settings.web_origin], allow_methods=["*"], allow_headers=["*"])
     app.mount("/ats", McpGate(ats_asgi, secret=settings.mcp_shared_secret, name="ats"))
     app.mount("/comms", McpGate(comms_asgi, secret=settings.mcp_shared_secret, name="comms"))
