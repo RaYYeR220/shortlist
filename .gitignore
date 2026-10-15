@@ -12,7 +12,6 @@ out/
 !**/.env.example
 .remember/
 .claude/
-.superpowers/
 *-internal/
 ui-prototypes/
 mockups/
