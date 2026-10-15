@@ -46,3 +46,8 @@ def test_strips_top_level_extras_and_underscored_arguments():
 
 def test_sanitize_passes_through_non_json():
     assert sanitize(b"not json") == (b"not json", {})
+
+
+def test_fails_closed_when_no_secret_is_configured():
+    body = {"jsonrpc": "2.0", "id": 1, "method": "ping"}
+    assert _client(secret="").post("/mcp", json=body, headers={"Authorization": "Bearer "}).status_code == 401

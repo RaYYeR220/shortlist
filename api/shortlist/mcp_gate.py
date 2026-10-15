@@ -1,6 +1,7 @@
 """ASGI wrapper for the mounted MCP apps.
 
-- Only callers that present the shared secret (the ArmorIQ proxy) get through.
+- Only callers that present the shared secret (the ArmorIQ proxy) get through; with
+  no secret configured nothing gets through.
 - JSON-RPC bodies are reduced to the fields MCP defines; anything the proxy or an
   SDK adds (top-level IAM context, `_`-prefixed tool arguments) is moved aside into
   `current_extras` so the strict MCP parser never sees it and a second-line
@@ -9,6 +10,7 @@
 """
 
 import base64
+import hmac
 import json
 import time
 from collections import deque
@@ -51,6 +53,10 @@ def sanitize(raw: bytes) -> tuple[bytes, dict]:
     return json.dumps(data).encode(), extras
 
 
+def _same(given: str, expected: str) -> bool:
+    return bool(given) and hmac.compare_digest(given.encode(), expected.encode())
+
+
 def _token_from_armoriq_header(value: str) -> str | None:
     try:
         decoded = json.loads(base64.b64decode(value))
@@ -67,13 +73,14 @@ class McpGate:
 
     def _authorized(self, headers: dict[str, str]) -> bool:
         if not self.secret:
+            return False
+        bearer = headers.get("authorization", "")
+        if bearer.startswith("Bearer ") and _same(bearer[7:], self.secret):
             return True
-        if headers.get("authorization") == f"Bearer {self.secret}":
-            return True
-        if headers.get("x-api-key") == self.secret:
+        if _same(headers.get("x-api-key", ""), self.secret):
             return True
         packed = headers.get("x-armoriq-mcp-auth")
-        return bool(packed) and _token_from_armoriq_header(packed) == self.secret
+        return bool(packed) and _same(_token_from_armoriq_header(packed) or "", self.secret)
 
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http":

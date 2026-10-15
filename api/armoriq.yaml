@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://docs.armoriq.ai/schemas/armoriq.schema.json
+version: v1
+identity:
+  api_key: $ARMORIQ_API_KEY
+  user_id: $AGENT_USER_EMAIL
+  agent_id: shortlist-coordinator
+environment: production
+proxy:
+  url: https://proxy.armoriq.ai
+mcp_servers:
+  - id: ats
+    url: $SHORTLIST_ATS_URL
+    description: Applicant tracking (Shortlist)
+    auth:
+      type: bearer
+      token: $MCP_SHARED_SECRET
+  - id: comms
+    url: $SHORTLIST_COMMS_URL
+    description: Candidate communications (Shortlist)
+    auth:
+      type: bearer
+      token: $MCP_SHARED_SECRET
+policy:
+  allow:
+    - ats.get_job
+    - ats.get_application
+    - ats.add_note
+    - ats.set_stage
+    - ats.create_offer
+    - comms.send_email
+    - comms.list_slots
+    - comms.book_slot
+  deny:
+    - ats.export_candidates
+    - ats.delete_application
+    - comms.send_bulk
+    - comms.forward_file
+intent:
+  ttl_seconds: 900
+  require_csrg: true
