@@ -4,12 +4,15 @@ import { use, useEffect, useState } from "react";
 import { Masthead } from "@/components/Masthead";
 import { Meta, RunDetail, api } from "@/lib/api";
 import { useRunEvents } from "@/lib/events";
+import { useWorkspace } from "@/lib/workspace";
 import { PlanCard } from "@/components/PlanCard";
+import { ResumeText } from "@/components/ResumeText";
 import { Timeline } from "@/components/Timeline";
 
 export default function RunPage({ params }: { params: Promise<{ runId: string }> }) {
   const { runId } = use(params);
   const events = useRunEvents(runId);
+  const { board } = useWorkspace();
   const [run, setRun] = useState<RunDetail | null>(null);
   const [meta, setMeta] = useState<Meta | null>(null);
 
@@ -22,6 +25,7 @@ export default function RunPage({ params }: { params: Promise<{ runId: string }>
     return () => { alive = false; clearInterval(id); };
   }, [runId, events.length]);
 
+  const application = board?.applications.find((a) => a.id === run?.objective_args.application_id) ?? null;
   const signed = run?.signed ?? events.find((e) => e.kind === "plan.signed")?.payload ?? null;
   const plan = run?.plan ?? events.find((e) => e.kind === "plan.declared")?.payload?.plan ?? null;
   const messages = events.filter((e) => ["llm.message", "screener.message", "caller.message"].includes(e.kind));
@@ -60,6 +64,12 @@ export default function RunPage({ params }: { params: Promise<{ runId: string }>
             {plan ? <PlanCard plan={plan} signed={signed} console={meta?.armoriq.console} />
               : <p className="mono" style={{ color: "var(--ink-500)" }}>Declaring the plan…</p>}
             {run?.status === "refused" && <div className="notice">The plan was refused before it was signed: {run.error}</div>}
+            {application && (
+              <div className="sheet" style={{ marginTop: 18 }}>
+                <div className="sheet-hd"><span>The application being screened</span><span className="mono">{application.name}</span></div>
+                <div className="sheet-bd"><ResumeText text={application.resume_text} /></div>
+              </div>
+            )}
           </div>
           <div>
             <Timeline events={events} onApprove={approve} />
